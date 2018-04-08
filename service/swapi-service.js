@@ -1,4 +1,5 @@
 const requestUtil = require('../util/request-util');
+const { swapiCacheExpiresIn } = require('../config/params');
 let planetsCache = {};
 
 async function getPlanetsPage(page) {
@@ -7,22 +8,34 @@ async function getPlanetsPage(page) {
 }
 
 async function getPlanets() {
-	let page = await getPlanetsPage();
-	let planetsCacheKeys = Object.keys(planetsCache);
-	if (!page || !page.count || page.count == planetsCacheKeys.length) {
-		return planetsCache;
+	const dateInterval = (new Date() - planetsCache.lastCacheUpdate) / 1000;
+	if (!dateInterval || dateInterval > swapiCacheExpiresIn) {
+		await updatePlanetsCache();
 	}
+	return planetsCache;
+}
+
+async function updatePlanetsCache() {
 	const results = [];
-	results.push(...page.results);
-	while (page.next) {
-		page = await getPlanetsPage(page.next);
-		results.push(...page.results);
+	try {
+		let page, planetsCacheKeys;
+		do {
+			const url = page && page.next;
+			page = await getPlanetsPage(url);
+			if (page.results) {
+				results.push(...page.results);
+			}
+		} while (page.next);
+	} catch (e) {
+		return;
 	}
 	planetsCache = results.reduce((t, p) => {
 		t[p.name] = p;
 		return t;
-	}, {});
-	return planetsCache;
+	}, {
+		lastCacheUpdate: new Date()
+	});
+	return;
 }
 
 module.exports = {
@@ -31,7 +44,7 @@ module.exports = {
 			const planets = await getPlanets();
 			return planets[planetName];
 		} catch (e) {
-			return planetsCache;
+			return;
 		}
 	}
 };

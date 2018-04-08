@@ -16,7 +16,7 @@ module.exports = {
 	async signToken(payload) {
 		return new Promise((resolve, reject) => {
 			jwt.sign(payload, tokenSecret, {
-				expiresIn: parseInt(tokenExp)
+				expiresIn: tokenExp
 			}, (signError, token) => {
 				if (signError) {
 					reject(signError);
