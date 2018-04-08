@@ -21,6 +21,7 @@ describe('User routes', function() {
 	let server;
 	before('Start server', async () => {
 		server = await require('../server');
+		await mongoose.connection.dropDatabase();
 	});
 	it('Should not find a nonexistent user', (done) => {
 		chai
@@ -229,7 +230,7 @@ describe('User routes', function() {
 				done();
 			});
 	});
-	it('Should prevent the logout without the token header param', (done) => {
+	it('Should logout user', (done) => {
 		chai
 			.request(server)
 			.post('/api/user/logout')
@@ -243,13 +244,6 @@ describe('User routes', function() {
 				done();
 			});
 	});
-	/*
-	it('', (done) => {});
-	it('', (done) => {});
-	it('', (done) => {});
-	it('', (done) => {});
-	it('', (done) => {});
-	*/
 	after('Clean DB and stop the server', async () => {
 		await mongoose.connection.dropDatabase();
 		await mongoose.connection.close();
