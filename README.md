@@ -31,6 +31,7 @@ https://swapi.co/
 - Um usuário autenticado pode:
 	- adicionar um planeta.
 	- obeter uma lista dos planetas cadastrados.
+	- obeter uma lista dos planetas cadastrados por ele.
 	- buscar um planeta pelo seu nome.
 	- alterar dados de um planeta.
 	- buscar um planeta pelo seu identificador único.

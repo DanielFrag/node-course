@@ -2,17 +2,21 @@ const requestUtil = require('../util/request-util');
 const { swapiCacheExpiresIn } = require('../config/params');
 let planetsCache = {};
 
-async function getPlanetsPage(page) {
-	const { body } = await requestUtil(page || 'https://swapi.co/api/planets');
-	return body;
+function isValidCache() {
+	const dateInterval = (new Date() - planetsCache.lastCacheUpdate) / 1000;
+	return dateInterval && dateInterval < swapiCacheExpiresIn;
 }
 
 async function getPlanets() {
-	const dateInterval = (new Date() - planetsCache.lastCacheUpdate) / 1000;
-	if (!dateInterval || dateInterval > swapiCacheExpiresIn) {
+	if (!isValidCache()) {
 		await updatePlanetsCache();
 	}
 	return planetsCache;
+}
+
+async function getPlanetsPage(page) {
+	const { body } = await requestUtil(page || 'https://swapi.co/api/planets');
+	return body;
 }
 
 async function updatePlanetsCache() {
@@ -29,6 +33,9 @@ async function updatePlanetsCache() {
 	} catch (e) {
 		return;
 	}
+	if (isValidCache()) {
+		return;
+	}
 	planetsCache = results.reduce((t, p) => {
 		t[p.name] = p;
 		return t;
@@ -39,10 +46,13 @@ async function updatePlanetsCache() {
 }
 
 module.exports = {
-	async getPlanetByName(planetName) {
+	async getNumberOfFilms(planetName) {
 		try {
 			const planets = await getPlanets();
-			return planets[planetName];
+			if (!planets[planetName]) {
+				return 0;
+			}
+			return planets[planetName].films.length;
 		} catch (e) {
 			return;
 		}

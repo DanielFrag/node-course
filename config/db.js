@@ -24,7 +24,7 @@ process.on('SIGINT', () => {
 	});
 });
 
-module.exports = async() => {
+module.exports = async () => {
 	try {
 		await mongoose.connect(dbUrl);
 	} catch(e) {
