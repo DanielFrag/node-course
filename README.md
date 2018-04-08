@@ -1,5 +1,5 @@
 # Curso de Node.js
-Uso do Node.js com o banco de dados NoSQL MongoDB
+Construção de uma aplicação web utilizando o Node.js, o Express.js e o MongoDB.
 
 ## Introdução
 Este curso tem por objetivo abordar:
@@ -28,12 +28,13 @@ https://swapi.co/
 
 - Um usuário deve conseguir se cadastrar no sistema ao prover um nome único e uma senha.
 - Um usuário deve estar autenticado para manipular informações dos planetas.
-- Um usuário autenticado pode adicionar um planeta.
-- Um usuário autenticado pode obeter uma lista dos planetas cadastrados.
-- Um usuário autenticado pode buscar um planeta pelo seu nome.
-- Um usuário autenticado pode alterar dados de um planeta.
-- Um usuário autenticado pode buscar um planeta pelo seu identificador único.
-- Um usuário autenticado pode remover um planeta.
+- Um usuário autenticado pode:
+	- adicionar um planeta.
+	- obeter uma lista dos planetas cadastrados.
+	- buscar um planeta pelo seu nome.
+	- alterar dados de um planeta.
+	- buscar um planeta pelo seu identificador único.
+	- remover um planeta.
 
 ### Não Funcionais
 - A API deve ser REST;
