@@ -27,7 +27,7 @@ https://swapi.co/
 ### Funcionais
 
 - Um usuário deve conseguir se cadastrar no sistema ao prover um nome único e uma senha.
-- Um usuário deve estar autenticado para acessar ou inserir informações dos planetas.
+- Um usuário deve estar autenticado para manipular informações dos planetas.
 - Um usuário autenticado pode adicionar um planeta.
 - Um usuário autenticado pode obeter uma lista dos planetas cadastrados.
 - Um usuário autenticado pode buscar um planeta pelo seu nome.
@@ -47,3 +47,7 @@ Terreno
 - Para cada planeta é necessário obter a quantidade de aparições em filmes da franquia "star wars" na API https://swapi.co/
 - O resultado da lista de planetas deve ser paginado. A paginação deve ser feita a partir dos dados de quantos planetas serão exibidos por página e qual é a página requisitada pelo usuário. Caso estes dados não sejam informados pelo usuário, deve ser exibida a primeira página com o agrupamento de dez em dez planetas.
 - A API pode ser consumida por outros sistemas web.
+
+### Regras de negócio
+
+- Um usuário só poderá remover planetas que tenham sido criados por ele.

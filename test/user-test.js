@@ -21,7 +21,6 @@ describe('User routes', function() {
 	let server;
 	before('Start server', async () => {
 		server = await require('../server');
-		await mongoose.connection.dropDatabase();
 	});
 	it('Should not find a nonexistent user', (done) => {
 		chai
