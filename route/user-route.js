@@ -8,5 +8,6 @@ module.exports = (app) => {
 		.route('/login')
 		.get(userHandler.findLogin)
 		.post(userHandler.login);
+	router.get('/revalidate-token', userHandler.checkAuthToken, userHandler.revalidateToken);
 	app.use('/api/user', router);
 }

@@ -19,10 +19,6 @@ module.exports = {
 				return res.status(403).send(`Invalid user's session`);
 			}
 			req.user = user;
-			req.updatedToken = await tokenUtil.signToken({
-				id: user._id,
-				session: user.session
-			});
 		} catch (e) {
 			return res.status(401).send(e.message);
 		}
@@ -75,4 +71,13 @@ module.exports = {
 		await userRepository.updateUserSession(req.user._id, stringUtil.generateSessionString(10));
 		res.status(204).send();
 	},
+	async revalidateToken(req, res) {
+		const newToken = await tokenUtil.signToken({
+			id: req.user._id,
+			session: req.user.session
+		});
+		res.json({
+			token: newToken
+		});
+	}
 }
