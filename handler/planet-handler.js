@@ -38,13 +38,13 @@ module.exports = {
 	async getPlanets(req, res) {
 		const page = Math.abs(req.query.page) || 1;
 		const size = Math.abs(req.query.size) || 10;
-		const planets = await planetRepository.getPlanets(page * size, size);
+		const planets = await planetRepository.getPlanets((page - 1) * size, size);
 		return res.json(planets);
 	},
 	async getPlanetsByUser(req, res) {
 		const page = Math.abs(req.query.page) || 1;
 		const size = Math.abs(req.query.size) || 10;
-		const planets = await planetRepository.getPlanetsByUser(req.user._id, page * size, size);
+		const planets = await planetRepository.getPlanetsByUser(req.user._id, (page - 1) * size, size);
 		return res.json(planets);
 	},
 	async updatePlanet(req, res) {
